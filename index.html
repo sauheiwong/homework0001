@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8" />
+        <title>my website</title>
+        <style>
+            .outside{
+                float: left;
+                width: 400px;
+                height: 500px;
+                border: 1px solid black;
+                margin-right: 10px;
+            }
+
+            .area1, .inside{
+                background-color:lightskyblue;
+            }
+
+            .inside{
+                border: 1px solid red;
+            }
+
+            #grade-table{
+                width: 70%;
+                text-align: center;
+                font-weight: bold;
+                padding-top: 10%;
+            }
+
+            input{
+                text-align: right;
+                width: 75px;
+            }
+
+            #Histogram-table{
+                width: 70%;
+                text-align: center;
+            }
+
+            .area2_1{
+                height:70%;
+            }
+
+            .area2_2{
+                height: 25%;
+                margin-top: 20px;
+            }
+
+            #label, #new_grade{
+                margin-top: 5%;
+            }
+
+            #label{
+                margin-left: 10%;
+            }
+
+        </style>
+    </head>
+    <body>
+        <div class="outside area1">
+            <h1 style="color: red; padding-left: 10px;">Lower bounds</h1>
+            <table id="grade-table">
+                <tr>
+                    <td>Max</td>
+                    <td><input type="number" value="100.00" class="grade_def"></td>
+                </tr>
+                <tr>
+                    <td>A+</td>
+                    <td><input type="number" value="95.00" class="grade_def"></td>
+                </tr>
+                <tr>
+                    <td>A</td>
+                    <td><input type="number" value="90.00" class="grade_def"></td>
+                </tr>
+                <tr>
+                    <td>A-</td>
+                    <td><input type="number" value="85.00" class="grade_def"></td>
+                </tr>
+                <tr>
+                    <td>B+</td>
+                    <td><input type="number" value="80.00" class="grade_def"></td>
+                </tr>
+                <tr>
+                    <td>B</td>
+                    <td><input type="number" value="75.00" class="grade_def"></td>
+                </tr>
+                <tr>
+                    <td>B-</td>
+                    <td><input type="number" value="70.00" class="grade_def"></td>
+                </tr>
+                <tr>
+                    <td>C+</td>
+                    <td><input type="number" value="65.00" class="grade_def"></td>
+                </tr>
+                <tr>
+                    <td>C</td>
+                    <td><input type="number" value="60.00" class="grade_def"></td>
+                </tr>
+                <tr>
+                    <td>C-</td>
+                    <td><input type="number" value="55.00" class="grade_def"></td>
+                </tr>
+                <tr>
+                    <td>D</td>
+                    <td><input type="number" value="50.00" class="grade_def"></td>
+                </tr>
+                <tr>
+                    <td>F</td>
+                    <td><input type="number" value="0" class="grade_def"></td>
+                </tr>
+            </table>
+        </div>
+        <div class="outside area2">
+            <div class="inside area2_1">
+                <h1 style="color: red; padding-left: 10px;">Histogram</h1>
+                <table id="Histogram-table">
+                    <tr>
+                        <td>A+</td>
+                        <td id="A+_td" class="grade_td"></td>
+                    </tr>
+                    <tr>
+                        <td>A</td>
+                        <td id="A_td" class="grade_td"></td>
+                    </tr>
+                    <tr>
+                        <td>A-</td>
+                        <td id="A-_td" class="grade_td"></td>
+                    </tr>
+                    <tr>
+                        <td>B+</td>
+                        <td id="B+_td" class="grade_td"></td>
+                    </tr>
+                    <tr>
+                        <td>B</td>
+                        <td id="B_td" class="grade_td"></td>
+                    </tr>
+                    <tr>
+                        <td>B-</td>
+                        <td id="B-_td" class="grade_td"></td>
+                    </tr>
+                    <tr>
+                        <td>C+</td>
+                        <td id="C+_td" class="grade_td"></td>
+                    </tr>
+                    <tr>
+                        <td>C</td>
+                        <td id="C_td" class="grade_td"></td>
+                    </tr>
+                    <tr>
+                        <td>C-</td>
+                        <td id="C-_td" class="grade_td"></td>
+                    </tr>
+                    <tr>
+                        <td>D</td>
+                        <td id="D_td" class="grade_td"></td>
+                    </tr>
+                    <tr>
+                        <td>F</td>
+                        <td id="F_td" class="grade_td"></td>
+                    </tr>
+                </table>
+            </div>
+            <div class="inside area2_2">
+                <label for="new_grade" id="label">New Grade:</label>
+                <input type="text" id="new_grade">
+            </div>
+        </div>
+    </body>
+    <script>
+        var grade_list = [65.95, 56.98, 78.62, 96.1, 90.3, 72.24, 92.34, 60.00, 81.43, 86.22, 88.33, 9.03,49.93, 52.34, 53.11, 50.10, 88.88, 55.32, 55.69, 61.68, 70.44, 70.54, 90.0, 71.11, 80.01];
+        var default_grade_dict = {
+            'Max': 100.00,
+            'A+': 95.00,
+            'A': 90.00,
+            'A-': 85.00,
+            'B+': 80.00,
+            'B': 75.00,
+            'B-': 70.00,
+            'C+': 65.00,
+            'C': 60.00,
+            'C-': 55.00,
+            'D': 50.00,
+            'F': 0
+        }
+        var grade_name_list = [
+            'A+', 'A', 'A-',
+            'B+', 'B', 'B-',
+            'C+', 'C', 'C-',
+            'D', 'F'
+        ];
+
+        var input_in_table = document.querySelectorAll('#grade-table td input');
+        input_in_table.forEach(function(inputElement) {
+            inputElement.addEventListener("blur", function() {
+                var grade_dict = genDict();
+                genHistogram(grade_dict);
+            });
+        });
+
+        function genDict(){
+            var grade_dict = {};
+            var table_element = document.querySelectorAll('#grade-table td');
+            var flag = false;
+            for (let i=0; i<parseInt(table_element.length/2); i++){
+                var x = 2*i;
+                var grade_name = table_element[x].textContent;
+                var grade_value = parseFloat(table_element[x+1].querySelector('input').value);
+                if (x>=2){
+                    let previous_value = parseFloat(table_element[x-1].querySelector('input').value);
+                    if (previous_value < grade_value){
+                        grade_dict = default_grade_dict;
+                        alert('something wrong');
+                        flag = true;
+                        break;
+                    }
+                }
+                grade_dict[grade_name] = grade_value.toFixed(2);
+            }
+            if (flag){
+                for (let i=0; i<parseInt(table_element.length/2); i++){
+                    var x = 2*i;
+                    var grade_name = table_element[x].textContent;
+                    table_element[x+1].querySelector('input').value = grade_dict[grade_name].toFixed(2);
+                }
+            }
+            // grade_dict = Object.fromEntries(
+            //     Object.entries(grade_dict).sort(([, a], [, b]) => a - b)
+            // );
+            for (const key in grade_dict) {
+                console.log(`${key}: ${grade_dict[key]}`);
+            }
+            return grade_dict
+        };
+
+        function genHistogram(grade_dict){
+            var grade_td_list = document.querySelectorAll('.grade_td');
+            console.log(grade_dict);
+            for (let td of grade_td_list){
+                td.textContent = '';
+            }
+            for (let grade of grade_list){
+                for (const key of grade_name_list){
+                    if (grade >= grade_dict[key]){
+                        console.log(key+' '+grade_dict[key]);
+                        tdElement = document.getElementById(key+'_td');
+                        tdElement.textContent = tdElement.textContent+'O';
+                        break;
+                    };
+                }
+            }
+        }
+        var grade_dict = genDict();
+        genHistogram(grade_dict);
+
+        function addNew(new_grade){
+            for (const key of grade_name_list){
+                if (new_grade >= grade_dict[key]){
+                    console.log(key+' '+grade_dict[key]);
+                    tdElement = document.getElementById(key+'_td');
+                    tdElement.textContent = tdElement.textContent+'O';
+                    break;
+                };
+            }
+        }
+
+        var input_sumbit = document.getElementById('new_grade');
+        input_sumbit.addEventListener("keydown", function(event) {
+            if (event.key === "Enter") {
+                var input_value = parseFloat(input_sumbit.value);
+                if ((input_value > grade_dict['Max'])||(input_value < grade_dict['F'])){
+                    alert('Must be between 0 to 100');
+                    return
+                }
+                addNew(input_value);
+                grade_list.push(input_value);
+                input_sumbit.value = '';
+            }
+        });
+
+
+    </script>
+</html>
